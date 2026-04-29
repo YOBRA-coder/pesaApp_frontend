@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useAuthStore } from '@/store/authStore';
 
 export const api = axios.create({
-  baseURL: 'http://pesaappbackend-production.up.railway.app/api/v1',//import.meta.env.VITE_API_URL || '/api/v1', // Your ngrok URL
+  baseURL: 'https://pesaappbackend-production.up.railway.app/api/v1',//import.meta.env.VITE_API_URL || '/api/v1', // Your ngrok URL
   timeout: 30_000,
   headers: { 'Content-Type': 'application/json' },
 });
