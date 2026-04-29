@@ -123,7 +123,7 @@ export default defineConfig({
   server {
     proxy: {
       '/api': { 
-        target: 'http://pesaappbackend-production.up.railway.app', 
+        target: 'https://pesaappbackend-production.up.railway.app', 
         changeOrigin: true,
         secure: false, // If ngrok uses self-signed certs
        },
