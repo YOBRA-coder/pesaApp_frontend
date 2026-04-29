@@ -120,15 +120,7 @@ export default defineConfig({
     alias: { '@': path.resolve(__dirname, './src') },
   },
 
-  server: {
-    port: 5173,
-       // 1. Allow the ngrok host (use true to allow all or a specific string)
-    allowedHosts: true, 
-    
-    // 2. Fix HMR for ngrok (allows live updates via the tunnel)
-    hmr: {
-      clientPort: 443, // Use 443 for https ngrok tunnels, 80 for http
-    },
+  server {
     proxy: {
       '/api': { 
         target: 'http://pesaappbackend-production.up.railway.app', 
@@ -137,7 +129,8 @@ export default defineConfig({
        },
       '/ws':  { 
         target: 'wss://pesaappbackend-production.up.railway.app',
-         ws: true
+         ws: true,
+         changeOrigin: true,
        },
     },
   },
