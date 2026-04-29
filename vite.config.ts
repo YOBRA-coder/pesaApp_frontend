@@ -131,12 +131,12 @@ export default defineConfig({
     },
     proxy: {
       '/api': { 
-        target: 'http://localhost:3000', 
+        target: 'http://pesaappbackend-production.up.railway.app', 
         changeOrigin: true,
         secure: false, // If ngrok uses self-signed certs
        },
       '/ws':  { 
-        target: 'ws://localhost:3000',
+        target: 'wss://pesaappbackend-production.up.railway.app',
          ws: true
        },
     },
