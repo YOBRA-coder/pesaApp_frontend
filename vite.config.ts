@@ -120,7 +120,7 @@ export default defineConfig({
     alias: { '@': path.resolve(__dirname, './src') },
   },
 
-  server {
+  server: {
     proxy: {
       '/api': { 
         target: 'https://pesaappbackend-production.up.railway.app', 
