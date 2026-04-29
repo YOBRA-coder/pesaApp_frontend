@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { TrendingUp, TrendingDown, Lock, Unlock, Star, AlertCircle, Clock, CheckCircle, XCircle, BarChart2, Globe, Bitcoin } from 'lucide-react';
+import { TrendingUp, Lock, Unlock, Star, AlertCircle, Clock, CheckCircle, XCircle, BarChart2, Globe } from 'lucide-react';
 import { useSignals, useSignalSubscription, useSubscribeSignals } from '@/hooks/useApi';
 import { formatKES } from '@/utils/format';
 import { formatDistanceToNow } from 'date-fns';

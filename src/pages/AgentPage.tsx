@@ -1,19 +1,17 @@
 import { useState, useEffect } from 'react';
 import { useAuthStore } from '@/store/authStore';
-import { useNavigate } from 'react-router-dom';
-import { apiGet, api } from '@/services/api';
+import { apiGet } from '@/services/api';
 import { formatKES, formatDate } from '@/utils/format';
-import { Users, TrendingUp, DollarSign, Copy, QrCode, Share2, ArrowRight, Loader2 } from 'lucide-react';
+import { Users, TrendingUp, DollarSign, Copy, Share2, ArrowRight } from 'lucide-react';
 import { useReferralStats } from '@/hooks/useApi';
 import toast from 'react-hot-toast';
 import clsx from 'clsx';
 
 export default function AgentPage() {
   const user = useAuthStore(s => s.user);
-  const navigate = useNavigate();
   const { data: referralStats } = useReferralStats();
   const [tab, setTab] = useState<'overview' | 'customers' | 'earnings' | 'tools'>('overview');
-  const [earningsData, setEarningsData] = useState<any[]>([]);
+  const [, setEarningsData] = useState<any[]>([]);
 
   useEffect(() => {
     if (user?.role === 'AGENT' || user?.role === 'ADMIN') {
@@ -165,7 +163,7 @@ export default function AgentPage() {
           <div className="card">
             <h2 className="section-title mb-4">Earnings History</h2>
             <div className="space-y-2">
-              {(referralStats?.referrals || []).slice(0, 10).map((r: any, i: number) => (
+              {(referralStats?.referrals || []).slice(0, 10).map((r: any) => (
                 <div key={r.id} className="flex items-center gap-3 py-2 border-b border-border last:border-0 text-sm">
                   <span className="text-xl">👤</span>
                   <div className="flex-1">

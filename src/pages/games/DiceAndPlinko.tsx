@@ -272,7 +272,7 @@ export function PlinkoPage() {
       refetch();
 
       // Animate ball using server path
-      const path: number[] = data.path || [];
+      // path: number[] = data.path || [];
       const ball = {
         id: ++ballIdRef.current,
         x: W/2 + (Math.random()-.5)*10,

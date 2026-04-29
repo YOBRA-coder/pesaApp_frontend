@@ -142,21 +142,38 @@ export default defineConfig({
     },
   },
 
-  build: {
-    outDir: 'dist',
-    sourcemap: false,
-    rollupOptions: {
-      output: {
-        // Split vendor chunks for better caching
-        manualChunks: {
-          react:  ['react', 'react-dom', 'react-router-dom'],
-          query:  ['@tanstack/react-query'],
-          charts: ['date-fns'],
-          forms:  ['react-hook-form', '@hookform/resolvers', 'zod'],
-          state:  ['zustand'],
-          ui:     ['lucide-react', 'clsx', 'tailwind-merge', 'react-hot-toast'],
-        },
+build: {
+  outDir: 'dist',
+  sourcemap: false,
+  rollupOptions: {
+    output: {
+      manualChunks(id) {
+        // Groups specific libraries into their own named chunks
+        if (id.includes('node_modules')) {
+          if (id.includes('react') || id.includes('react-dom') || id.includes('react-router-dom')) {
+            return 'react';
+          }
+          if (id.includes('@tanstack/react-query')) {
+            return 'query';
+          }
+          if (id.includes('date-fns')) {
+            return 'charts';
+          }
+          if (id.includes('react-hook-form') || id.includes('@hookform/resolvers') || id.includes('zod')) {
+            return 'forms';
+          }
+          if (id.includes('zustand')) {
+            return 'state';
+          }
+          if (id.includes('lucide-react') || id.includes('clsx') || id.includes('tailwind-merge') || id.includes('react-hot-toast')) {
+            return 'ui';
+          }
+          
+          // Optional: Catch-all for other node_modules
+          return 'vendor'; 
+        }
       },
     },
   },
+},
 });

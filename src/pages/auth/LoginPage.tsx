@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import toast from 'react-hot-toast';
-import { Phone, ArrowRight, Loader2, ChevronDown, Gift } from 'lucide-react';
+import { ArrowRight, Loader2, ChevronDown, Gift } from 'lucide-react';
 import { api } from '@/services/api';
 import clsx from 'clsx';
 
@@ -45,6 +45,7 @@ useEffect(() => {
   });
 
   const phone = watch('phone');
+  console.log(phone)
 
   // Format phone as user types
   const formatPhone = (raw: string) => {

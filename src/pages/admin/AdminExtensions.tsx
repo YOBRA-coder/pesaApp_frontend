@@ -32,7 +32,6 @@
 import { useState, useEffect } from 'react';
 import { apiGet } from '@/services/api';
 import { formatKES } from '@/utils/format';
-import { HouseWallet, GameRevenueTable } from './admin/HouseFund';
 import clsx from 'clsx';
 
 export function RevenueSummary() {

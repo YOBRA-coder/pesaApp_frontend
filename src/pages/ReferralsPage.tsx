@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { useReferralStats } from '@/hooks/useApi';
 import { formatKES, formatDate } from '@/utils/format';
-import { Copy, Share2, Users, Gift, Trophy, TrendingUp, ChevronRight } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { Copy, Share2, Users, Gift, Trophy } from 'lucide-react';
 import toast from 'react-hot-toast';
 import clsx from 'clsx';
 
@@ -15,8 +14,7 @@ const TIERS = [
 ];
 
 export default function ReferralsPage() {
-  const navigate = useNavigate();
-  const { data: stats, isLoading } = useReferralStats();
+  const { data: stats } = useReferralStats();
   const [tab, setTab] = useState<'overview' | 'friends' | 'leaderboard'>('overview');
 
   const total = stats?.totalReferrals || 0;

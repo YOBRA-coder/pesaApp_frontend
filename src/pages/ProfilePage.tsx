@@ -1,7 +1,7 @@
 
 // ─── ProfilePage.tsx ──────────────────────────────────────────
 import { useRef as useR, useState } from 'react';
-import { Camera as Cam, User, Shield, Bell, LogOut, ChevronRight as CR } from 'lucide-react';
+import { Camera as Cam, Shield, Bell, LogOut, ChevronRight as CR } from 'lucide-react';
 import { useMe, useUpdateProfile } from '@/hooks/useApi';
 import { useNavigate as useNav } from 'react-router-dom';
 import { api } from '@/services/api';

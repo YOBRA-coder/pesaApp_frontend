@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTransactions } from '@/hooks/useApi';
 import { formatKES, formatDate, txTypeIcon, txTypeColor } from '@/utils/format';
-import { ArrowLeft, X, CheckCircle, XCircle, Clock, ExternalLink } from 'lucide-react';
+import { ArrowLeft, X, CheckCircle, XCircle, Clock } from 'lucide-react';
 import clsx from 'clsx';
 
 type TxType = '' | 'DEPOSIT' | 'WITHDRAWAL' | 'SEND' | 'RECEIVE' | 'GAME_BET' | 'GAME_WIN' | 'BILL_PAYMENT' | 'REFERRAL_BONUS' | 'SIGNAL_SUBSCRIPTION';

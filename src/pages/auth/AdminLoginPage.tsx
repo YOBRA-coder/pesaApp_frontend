@@ -7,7 +7,6 @@ import toast from 'react-hot-toast';
 import { Shield, Phone, Lock, Eye, EyeOff, Loader2, ArrowLeft, ArrowRight } from 'lucide-react';
 import { api } from '@/services/api';
 import { useAuthStore } from '@/store/authStore';
-import clsx from 'clsx';
 
 // ── Step 1: Phone + Password ─────────────────────────────────
 const loginSchema = z.object({
@@ -133,12 +132,12 @@ export default function AdminLoginPage() {
                   {showPass ? <EyeOff size={15} /> : <Eye size={15} />}
                 </button>
               </div>
-              {setupForm.formState.errors.password && <p className="text-danger text-xs mt-1">{setupForm.formState.errors.password.message}</p>}
+              {setupForm.formState.errors.password && <p className="text-danger text-xs mt-1">{setupForm.formState.errors.password.message?.toString()}</p>}
             </div>
             <div>
               <label className="label">Confirm Password</label>
               <input {...setupForm.register('confirm')} type="password" className="input" placeholder="Repeat password" />
-              {setupForm.formState.errors.confirm && <p className="text-danger text-xs mt-1">{setupForm.formState.errors.confirm.message}</p>}
+              {setupForm.formState.errors.confirm && <p className="text-danger text-xs mt-1">{setupForm.formState.errors.confirm.message?.toString()}</p>}
             </div>
             <button type="submit" disabled={loading} className="btn-primary w-full justify-center py-3 font-bold">
               {loading ? <Loader2 size={16} className="animate-spin" /> : 'Set Password & Login →'}
@@ -155,7 +154,7 @@ export default function AdminLoginPage() {
                 <Phone size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-subtle" />
                 <input {...loginForm.register('phone')} className="input pl-9" placeholder="0712 345 678" type="tel" autoFocus />
               </div>
-              {loginForm.formState.errors.phone && <p className="text-danger text-xs mt-1">{loginForm.formState.errors.phone.message}</p>}
+              {loginForm.formState.errors.phone && <p className="text-danger text-xs mt-1">{loginForm.formState.errors.phone.message?.toString()}</p>}
             </div>
             <div>
               <label className="label">Password</label>
@@ -167,7 +166,7 @@ export default function AdminLoginPage() {
                   {showPass ? <EyeOff size={15} /> : <Eye size={15} />}
                 </button>
               </div>
-              {loginForm.formState.errors.password && <p className="text-danger text-xs mt-1">{loginForm.formState.errors.password.message}</p>}
+              {loginForm.formState.errors.password && <p className="text-danger text-xs mt-1">{loginForm.formState.errors.password.message?.toString()}</p>}
             </div>
             <button type="submit" disabled={loading} className="btn-primary w-full justify-center py-3 font-bold">
               {loading ? <Loader2 size={16} className="animate-spin" /> : <>Continue <ArrowRight size={16} /></>}
@@ -186,7 +185,7 @@ export default function AdminLoginPage() {
                 <label className="label">2FA Code</label>
                 <input {...otpForm.register('otp')} className="input text-center font-display font-bold text-2xl tracking-[0.3em]"
                   placeholder="000000" maxLength={6} inputMode="numeric" autoFocus />
-                {otpForm.formState.errors.otp && <p className="text-danger text-xs mt-1">{otpForm.formState.errors.otp.message}</p>}
+                {otpForm.formState.errors.otp && <p className="text-danger text-xs mt-1">{otpForm.formState.errors.otp.message?.toString()}</p>}
               </div>
               <button type="submit" disabled={loading} className="btn-primary w-full justify-center py-3 font-bold">
                 {loading ? <Loader2 size={16} className="animate-spin" /> : '✅ Verify & Login'}

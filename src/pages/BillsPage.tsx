@@ -1,5 +1,5 @@
 // ─── BillsPage.tsx ──────────────────────────────────────────
-import { Zap, Droplets, Tv, Phone, Loader2 } from 'lucide-react';
+import { Zap, Loader2 } from 'lucide-react';
 import { usePayBill, useBuyAirtime } from '@/hooks/useApi';
 import { formatKES } from '@/utils/format';
 import { useState } from 'react';

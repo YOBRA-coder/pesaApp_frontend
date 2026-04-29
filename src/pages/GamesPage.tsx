@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Gamepad2, TrendingUp, Zap, Star } from 'lucide-react';
+import { Gamepad2 } from 'lucide-react';
 import clsx from 'clsx';
 
 const GAMES = [

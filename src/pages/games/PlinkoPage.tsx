@@ -20,6 +20,7 @@ interface Ball {
   done: boolean;
   slot?: number;
   color: string;
+  betAmount: string;
 }
 
 const COLORS = ['#00e57a','#4d9fff','#f0c040','#a855f7','#ff4d6a'];
@@ -33,7 +34,7 @@ export default function PlinkoPage() {
 
   const [betAmount, setBetAmount] = useState('100');
   const [risk, setRisk] = useState<'low'|'medium'|'high'>('medium');
-  const [lastSlot, setLastSlot] = useState<number | null>(null);
+  const [, setLastSlot] = useState<number | null>(null);
   const [lastMult, setLastMult] = useState<number | null>(null);
   const [dropping, setDropping] = useState(false);
   const [history, setHistory] = useState<{ mult: number; win: number }[]>([]);

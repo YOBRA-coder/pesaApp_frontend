@@ -14,6 +14,7 @@ export function calcMinesMultiplier(minesCount: number, gemsFound: number): numb
   for (let i = 0; i < gemsFound; i++) {
     mult *= (GRID_SIZE - minesCount - i) / (GRID_SIZE - i);
   }
+  console.log(safeTotal)
   const pSurvive = mult;
   const fairMult = 1 / pSurvive;
   return parseFloat(Math.max(1, fairMult * (1 - HOUSE_EDGE)).toFixed(4));

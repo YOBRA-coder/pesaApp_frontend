@@ -5,7 +5,7 @@ import { api, apiGet } from '@/services/api';
 import { formatKES, formatDate } from '@/utils/format';
 import toast from 'react-hot-toast';
 import clsx from 'clsx';
-import { Users, TrendingUp, DollarSign, Shield, BarChart2, Send, CheckCircle, XCircle, Eye, Plus, Loader2, ChevronDown, Search } from 'lucide-react';
+import { Users, TrendingUp, DollarSign, Shield, BarChart2, CheckCircle, XCircle, Plus, Loader2, Search } from 'lucide-react';
 import { HouseWallet, GameRevenueTable } from './admin/HouseFund';
 import { RevenueSummary, HouseTransactions } from './admin/AdminExtensions';
 import AdminSignalsPage from './admin/AdminSignals';

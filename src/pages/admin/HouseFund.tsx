@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { api, apiGet } from '@/services/api';
-import { formatKES, formatDate } from '@/utils/format';
-import { DollarSign, TrendingUp, TrendingDown, ArrowDownLeft, ArrowUpRight, Gamepad2, Loader2, RefreshCw } from 'lucide-react';
+import { formatKES } from '@/utils/format';
+import { DollarSign, ArrowDownLeft, ArrowUpRight, Gamepad2, Loader2, RefreshCw } from 'lucide-react';
 import toast from 'react-hot-toast';
 import clsx from 'clsx';
 

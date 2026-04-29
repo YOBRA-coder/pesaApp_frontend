@@ -13,7 +13,8 @@ import './animations.css';
 //   plugins: [react(), VitePWA({ registerType: 'autoUpdate', ... })]
 //
 // OR manual registration (fallback if not using plugin):
-if ('serviceWorker' in navigator && import.meta.env.PROD) {
+const PROD = true;
+if ('serviceWorker' in navigator && PROD) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js', { scope: '/' })
       .then(reg => {

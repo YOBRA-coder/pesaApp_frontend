@@ -3,16 +3,16 @@ import { api } from '@/services/api';
 import { useWallet } from '@/hooks/useApi';
 import { formatKES } from '@/utils/format';
 import toast from 'react-hot-toast';
-import { Loader2, Clock, X, ChevronDown, ChevronUp, RefreshCw, Trophy } from 'lucide-react';
+import { Loader2, Clock, X, RefreshCw, Trophy } from 'lucide-react';
 import clsx from 'clsx';
-import axios, { all } from 'axios';
+//import axios, { all } from 'axios';
 
 // ── Types ─────────────────────────────────────────────────────
 type MarketType =
   | '1X2' | 'DC' | 'BTTS' | 'OVER_UNDER' | 'DNB'
   | 'CORRECT_SCORE' | 'HT_FT' | 'ASIAN_HANDICAP' | 'FIRST_GOAL';
 
-interface OddsMap { [key: string]: number; }
+//interface OddsMap { [key: string]: number; }
 
 interface Market {
   type: MarketType;
@@ -46,109 +46,6 @@ const LEAGUES = [
   { id:'bund',  flag:'🇩🇪', label:'Bundesliga' },
   { id:'ll1',   flag:'🇫🇷', label:'Ligue 1' },
   { id:'afcon', flag:'🌍', label:'AFCON' },
-];
-
-// ── Build all markets for a match ─────────────────────────────
-function buildMarkets(home: number, draw: number, away: number, homeTeam: string, awayTeam: string): Market[] {
-  const h = (v: number) => v.toFixed(2);
-  const over25 = (1/(0.55*(1/home+1/away+1/draw)*0.55)).toFixed(2);
-  const under25 = (1/(0.45*(1/home+1/away+1/draw)*0.45)).toFixed(2);
-
-  return [
-    {
-      type: '1X2', label: 'Match Result',
-      selections: [
-        { key:'1',  label:`1 ${homeTeam}`, odds: home },
-        { key:'X',  label:'X Draw',        odds: draw },
-        { key:'2',  label:`2 ${awayTeam}`, odds: away },
-      ],
-    },
-    {
-      type: 'DC', label: 'Double Chance',
-      selections: [
-        { key:'1X', label:'1X Home/Draw', odds: parseFloat(h(1/(1/home+1/draw))) },
-        { key:'12', label:'12 Home/Away', odds: parseFloat(h(1/(1/home+1/away))) },
-        { key:'X2', label:'X2 Draw/Away', odds: parseFloat(h(1/(1/draw+1/away))) },
-      ],
-    },
-    {
-      type: 'BTTS', label: 'Both Teams Score',
-      selections: [
-        { key:'gg',  label:'GG (Both Score Yes)', odds: parseFloat(h(1.75+Math.random()*.3)) },
-        { key:'ng',  label:'NG (Both Score No)',  odds: parseFloat(h(1.90+Math.random()*.3)) },
-      ],
-    },
-    {
-      type: 'OVER_UNDER', label: 'Total Goals',
-      selections: [
-        { key:'over_0.5',  label:'Over 0.5 goals',  odds: parseFloat(h(1.20+Math.random()*.15)) },
-        { key:'under_0.5', label:'Under 0.5 goals', odds: parseFloat(h(5.50+Math.random()*.5)) },
-        { key:'over_1.5',  label:'Over 1.5 goals',  odds: parseFloat(h(1.45+Math.random()*.2)) },
-        { key:'under_1.5', label:'Under 1.5 goals', odds: parseFloat(h(2.60+Math.random()*.3)) },
-        { key:'over_2.5',  label:'Over 2.5 goals',  odds: parseFloat(over25) },
-        { key:'under_2.5', label:'Under 2.5 goals', odds: parseFloat(under25) },
-        { key:'over_3.5',  label:'Over 3.5 goals',  odds: parseFloat(h(2.30+Math.random()*.3)) },
-        { key:'under_3.5', label:'Under 3.5 goals', odds: parseFloat(h(1.55+Math.random()*.2)) },
-      ],
-    },
-    {
-      type: 'DNB', label: 'Draw No Bet',
-      selections: [
-        { key:'dnb_1', label:`${homeTeam} DNB`, odds: parseFloat(h(home * 0.85)) },
-        { key:'dnb_2', label:`${awayTeam} DNB`, odds: parseFloat(h(away * 0.85)) },
-      ],
-    },
-    {
-      type: 'FIRST_GOAL', label: 'First Goal Scorer (team)',
-      selections: [
-        { key:'fg_home',  label:`${homeTeam} scores first`, odds: parseFloat(h(1/(1/home+1/draw)*1.15)) },
-        { key:'fg_away',  label:`${awayTeam} scores first`, odds: parseFloat(h(1/(1/away+1/draw)*1.15)) },
-        { key:'fg_no',    label:'No Goal',                  odds: parseFloat(h(7+Math.random()*3)) },
-      ],
-    },
-    {
-      type: 'HT_FT', label: 'Half-Time / Full-Time',
-      selections: [
-        { key:'ht1_ft1', label:'Home / Home', odds: parseFloat(h(home*1.8)) },
-        { key:'ht1_ftX', label:'Home / Draw', odds: parseFloat(h(12+Math.random()*5)) },
-        { key:'ht1_ft2', label:'Home / Away', odds: parseFloat(h(20+Math.random()*8)) },
-        { key:'htX_ft1', label:'Draw / Home', odds: parseFloat(h(3.5+Math.random())) },
-        { key:'htX_ftX', label:'Draw / Draw', odds: parseFloat(h(5+Math.random()*2)) },
-        { key:'htX_ft2', label:'Draw / Away', odds: parseFloat(h(4+Math.random()*2)) },
-        { key:'ht2_ft1', label:'Away / Home', odds: parseFloat(h(22+Math.random()*8)) },
-        { key:'ht2_ftX', label:'Away / Draw', odds: parseFloat(h(14+Math.random()*5)) },
-        { key:'ht2_ft2', label:'Away / Away', odds: parseFloat(h(away*1.9)) },
-      ],
-    },
-    {
-      type: 'CORRECT_SCORE', label: 'Correct Score',
-      selections: [
-        { key:'cs_1_0', label:'1-0',  odds: parseFloat(h(5.5+Math.random()*2)) },
-        { key:'cs_2_0', label:'2-0',  odds: parseFloat(h(8+Math.random()*3)) },
-        { key:'cs_2_1', label:'2-1',  odds: parseFloat(h(7+Math.random()*3)) },
-        { key:'cs_1_1', label:'1-1',  odds: parseFloat(h(5+Math.random()*2)) },
-        { key:'cs_0_0', label:'0-0',  odds: parseFloat(h(9+Math.random()*3)) },
-        { key:'cs_0_1', label:'0-1',  odds: parseFloat(h(9+Math.random()*4)) },
-        { key:'cs_0_2', label:'0-2',  odds: parseFloat(h(12+Math.random()*4)) },
-        { key:'cs_1_2', label:'1-2',  odds: parseFloat(h(10+Math.random()*4)) },
-        { key:'cs_other',label:'Other',odds: parseFloat(h(4+Math.random()*2)) },
-      ],
-    },
-  ];
-}
-
-// ── Build demo matches ─────────────────────────────────────────
-const DEMO_MATCHES: Match[] = [
-  { id:'m1',  league:'kpl',    leagueFlag:'🇰🇪', leagueLabel:'Kenyan Premier League', homeTeam:'Gor Mahia', awayTeam:'AFC Leopards', homeLogo:'🟢', awayLogo:'🔵', kickoff:new Date(Date.now()+3600000).toISOString(),   status:'upcoming', markets: buildMarkets(1.85,3.10,4.20,'Gor Mahia','AFC Leopards'), popular:true },
-  { id:'m2',  league:'kpl',    leagueFlag:'🇰🇪', leagueLabel:'Kenyan Premier League', homeTeam:'Tusker FC', awayTeam:'KCB FC', homeLogo:'🟡', awayLogo:'🔴', kickoff:new Date(Date.now()-1800000).toISOString(), status:'live', minute:62, homeScore:1, awayScore:0, markets: buildMarkets(1.75,3.30,4.50,'Tusker FC','KCB FC') },
-  { id:'m3',  league:'kpl',    leagueFlag:'🇰🇪', leagueLabel:'Kenyan Premier League', homeTeam:'Bandari FC', awayTeam:'Sofapaka', homeLogo:'⚓', awayLogo:'⚫', kickoff:new Date(Date.now()+7200000).toISOString(), status:'upcoming', markets: buildMarkets(2.20,3.00,3.10,'Bandari','Sofapaka') },
-  { id:'m4',  league:'epl',    leagueFlag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿', leagueLabel:'Premier League', homeTeam:'Arsenal', awayTeam:'Chelsea', homeLogo:'🔴', awayLogo:'🔵', kickoff:new Date(Date.now()+10800000).toISOString(), status:'upcoming', markets: buildMarkets(2.10,3.40,3.50,'Arsenal','Chelsea'), popular:true },
-  { id:'m5',  league:'epl',    leagueFlag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿', leagueLabel:'Premier League', homeTeam:'Man City', awayTeam:'Liverpool', homeLogo:'🩵', awayLogo:'🔴', kickoff:new Date(Date.now()+18000000).toISOString(), status:'upcoming', markets: buildMarkets(1.90,3.60,3.80,'Man City','Liverpool'), popular:true },
-  { id:'m6',  league:'epl',    leagueFlag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿', leagueLabel:'Premier League', homeTeam:'Tottenham', awayTeam:'Newcastle', homeLogo:'⚪', awayLogo:'⚫', kickoff:new Date(Date.now()+25200000).toISOString(), status:'upcoming', markets: buildMarkets(2.30,3.20,2.90,'Tottenham','Newcastle') },
-  { id:'m7',  league:'cl',     leagueFlag:'⭐',  leagueLabel:'Champions League', homeTeam:'Real Madrid', awayTeam:'Bayern Munich', homeLogo:'⚪', awayLogo:'🔴', kickoff:new Date(Date.now()+86400000).toISOString(), status:'upcoming', markets: buildMarkets(1.95,3.50,3.80,'Real Madrid','Bayern'), popular:true },
-  { id:'m8',  league:'cl',     leagueFlag:'⭐',  leagueLabel:'Champions League', homeTeam:'PSG', awayTeam:'Man City', homeLogo:'🔵', awayLogo:'🩵', kickoff:new Date(Date.now()+90000000).toISOString(), status:'upcoming', markets: buildMarkets(2.40,3.20,2.70,'PSG','Man City') },
-  { id:'m9',  league:'laliga', leagueFlag:'🇪🇸', leagueLabel:'La Liga', homeTeam:'Barcelona', awayTeam:'Atletico', homeLogo:'🔵', awayLogo:'🔴', kickoff:new Date(Date.now()+172800000).toISOString(), status:'upcoming', markets: buildMarkets(1.75,3.80,4.50,'Barcelona','Atletico') },
-  { id:'m10', league:'bund',   leagueFlag:'🇩🇪', leagueLabel:'Bundesliga', homeTeam:'Dortmund', awayTeam:'Leverkusen', homeLogo:'🟡', awayLogo:'🔴', kickoff:new Date(Date.now()+259200000).toISOString(), status:'upcoming', markets: buildMarkets(2.10,3.30,3.10,'Dortmund','Leverkusen') },
 ];
 
 // ── Bet Slip ──────────────────────────────────────────────────
@@ -247,59 +144,9 @@ function BetSlip({ slip, onRemove, onClear, onPlace }: {
   );
 }
 
-// ── Market section ────────────────────────────────────────────
-function MarketSection({ market, match, slip, onToggle }: {
-  market: Market; match: Match;
-  slip: BetSelection[];
-  onToggle: (b: BetSelection) => void;
-}) {
-  const [open, setOpen] = useState(market.type === '1X2');
-
-  return (
-    <div className="border-t border-border pt-3">
-      <button onClick={() => setOpen(o => !o)} className="flex items-center justify-between w-full text-left mb-2">
-        <span className="text-[11px] text-muted uppercase tracking-wider font-bold">{market.label}</span>
-        {open ? <ChevronUp size={13} className="text-subtle"/> : <ChevronDown size={13} className="text-subtle"/>}
-      </button>
-      {open && (
-        <div className={clsx(
-          'grid gap-2',
-          market.type === 'OVER_UNDER' ? 'grid-cols-2' :
-          market.type === 'CORRECT_SCORE' ? 'grid-cols-3' :
-          market.type === 'HT_FT' ? 'grid-cols-3' :
-          'grid-cols-3'
-        )}>
-          {market.selections.map(sel => {
-            const active = slip.some(b => b.matchId === match.id && b.marketType === market.type && b.key === sel.key);
-            return (
-              <button key={sel.key}
-                onClick={() => onToggle({
-                  matchId: match.id,
-                  matchLabel: `${match.homeTeam} vs ${match.awayTeam}`,
-                  marketType: market.type,
-                  marketLabel: market.label,
-                  key: sel.key,
-                  selectionLabel: sel.label,
-                  odds: sel.odds,
-                })}
-                className={clsx(
-                  'flex flex-col items-center py-2 px-2 rounded-xl border text-center transition-all hover:scale-[1.03] active:scale-95',
-                  active ? 'bg-green/15 border-green/40 text-green' : 'bg-card2 border-border text-muted hover:border-border2 hover:text-white'
-                )}>
-                <span className="text-[9px] opacity-70 mb-0.5 truncate w-full text-center">{sel.label}</span>
-                <span className={clsx('font-display font-black text-sm', active ? 'text-green' : 'text-white')}>{sel.odds.toFixed(2)}</span>
-              </button>
-            );
-          })}
-        </div>
-      )}
-    </div>
-  );
-}
-
 // ── Match Card ────────────────────────────────────────────────
 function MatchCard({ match, slip, onToggle }: { match: any; slip:BetSelection[]; onToggle:(b:BetSelection)=>void }) {
-  const [expanded, setExpanded] = useState(false);
+  //const [expanded, setExpanded] = useState(false);
   const inSlip = slip.some(b => b.matchId === match.id);
 
   const kickoffLabel = () => {

@@ -14,6 +14,7 @@ export default function KycPage() {
   const { data: kycRecord, isLoading } = useKycStatus();
   const submitKyc = useSubmitKyc();
   const user = useAuthStore(s => s.user);
+  if(!user) return;
 
   const [docType, setDocType] = useState('NATIONAL_ID');
   const [formData, setFormData] = useState({ docNumber: '', firstName: '', lastName: '', dateOfBirth: '' });
