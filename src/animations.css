@@ -1,0 +1,101 @@
+/* ── ADD THESE TO YOUR EXISTING index.css ─────────────────── */
+
+/* Ticker animation for live stats and price strips */
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Progress bar animation for promo banners */
+@keyframes progressBar {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+/* Float animation for emoji/icons */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-8px) rotate(2deg); }
+  66% { transform: translateY(-4px) rotate(-1deg); }
+}
+
+/* Twinkle for star particles */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.1; transform: scale(0.8); }
+  50% { opacity: 0.6; transform: scale(1.4); }
+}
+
+/* Glow pulse for active elements */
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 10px rgba(0,229,122,0.2); }
+  50% { box-shadow: 0 0 30px rgba(0,229,122,0.5); }
+}
+
+/* Slide in from bottom */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Slide in from right */
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Number counter flash */
+@keyframes numberFlash {
+  0% { color: #00e57a; }
+  50% { color: #ffffff; }
+  100% { color: #00e57a; }
+}
+
+/* Plane shake on crash */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-5px); }
+  40% { transform: translateX(5px); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(3px); }
+}
+
+/* Utility classes */
+.animate-float { animation: float 3s ease-in-out infinite; }
+.animate-twinkle { animation: twinkle 3s ease-in-out infinite; }
+.animate-glow-pulse { animation: glowPulse 2s ease-in-out infinite; }
+.animate-slide-up { animation: slideUp 0.3s ease-out; }
+.animate-slide-right { animation: slideInRight 0.3s ease-out; }
+.animate-shake { animation: shake 0.5s ease-out; }
+.animate-number { animation: numberFlash 0.3s ease-out; }
+
+/* Live ticker strip */
+.ticker-strip {
+  overflow: hidden;
+  white-space: nowrap;
+}
+.ticker-inner {
+  display: inline-flex;
+  animation: ticker 25s linear infinite;
+}
+.ticker-inner:hover { animation-play-state: paused; }
+
+/* Candlestick glow */
+.chart-glow {
+  filter: drop-shadow(0 0 4px rgba(0,229,122,0.4));
+}
+
+/* Mobile notch safe area */
+@supports (padding: max(0px)) {
+  .safe-bottom { padding-bottom: max(env(safe-area-inset-bottom), 12px); }
+  .safe-top { padding-top: max(env(safe-area-inset-top), 0px); }
+}
+
+/* Responsive grid helpers */
+@media (max-width: 640px) {
+  .page-header { font-size: 1.25rem; }
+  .section-title { font-size: 0.875rem; }
+  .card { padding: 0.875rem; }
+}
+
+/* Canvas crisp rendering */
+canvas { image-rendering: pixelated; image-rendering: crisp-edges; }
