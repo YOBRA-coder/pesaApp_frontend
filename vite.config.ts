@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
@@ -125,7 +126,6 @@ export default defineConfig({
       '/api': { 
         target: 'https://pesa.zonmrkt.com', 
         changeOrigin: true,
-        secure: false, // If ngrok uses self-signed certs
        },
       '/ws':  { 
         target: 'wss://pesa.zonmrkt.com',
