@@ -7,7 +7,7 @@ import toast from 'react-hot-toast';
 import { Eye, EyeOff, Volume2, VolumeX, Plus, X } from 'lucide-react';
 import clsx from 'clsx';
 
-const WS_URL =  'wss://pesaappbackend-production.up.railway.app' + '/ws';
+const WS_URL =  'wss://pesa.zonmrkt.com' + '/ws';
 
 // ── Audio — cleanup on unmount ────────────────────────────────
 class GameAudio {
