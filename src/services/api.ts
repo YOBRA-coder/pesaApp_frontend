@@ -40,7 +40,7 @@ api.interceptors.response.use(
         if (!refreshToken) throw new Error('No refresh token');
 
         const { data } = await axios.post(
-          `${'http://localhost:3000/api/v1'}/auth/refresh`,
+          `${'https://pesa.zonmrkt.com/api/v1'}/auth/refresh`,
           { refreshToken }
         );
         const newToken = data.data.accessToken;
