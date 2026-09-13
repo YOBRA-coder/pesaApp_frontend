@@ -7,7 +7,7 @@ import toast from 'react-hot-toast';
 import clsx from 'clsx';
 
 //const WS_URL = (import.meta.env.VITE_WS_URL || 'ws://localhost:3000') + '/ws';
-const WS_URL = 'ws://localhost:3000' + '/ws';
+const WS_URL = 'wss://pesa.zonmrkt.com' + '/ws';
 
 // ── Audio ─────────────────────────────────────────────────────
 class GameAudio {
