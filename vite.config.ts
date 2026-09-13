@@ -123,12 +123,12 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': { 
-        target: 'https://pesaappbackend-production.up.railway.app', 
+        target: 'https://pesa.zonmrkt.com', 
         changeOrigin: true,
         secure: false, // If ngrok uses self-signed certs
        },
       '/ws':  { 
-        target: 'wss://pesaappbackend-production.up.railway.app',
+        target: 'wss://pesa.zonmrkt.com',
          ws: true,
          changeOrigin: true,
        },
