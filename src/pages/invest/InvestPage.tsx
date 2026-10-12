@@ -573,7 +573,7 @@ const PLANS = [
 
 // ── Main Invest Page ──────────────────────────────────────────
 export default function InvestPage() {
-  const [tab, setTab] = useState<'signals' | 'charts' | 'markets' | 'plans'>('signals');
+  const [tab, setTab] = useState<'signals' | 'charts' | 'markets' | 'trade' | 'plans'>('signals');
   const [filter, setFilter] = useState<'all' | 'FOREX' | 'CRYPTO' | 'COMMODITY'>('all');
   const [openChart, setOpenChart] = useState<any>(null);
   const [openChartPair, setOpenChartPair] = useState<string | null>(null);
@@ -640,7 +640,7 @@ export default function InvestPage() {
 
         {/* Tabs */}
         <div className="flex gap-1 bg-card border border-border rounded-xl p-1">
-          {[['signals', '📡 Signals'], ['charts', '📊 Charts'], ['markets', '🌍 Markets'], ['plans', '⭐ Plans']].map(([id, lbl]) => (
+          {[['signals', '📡 Signals'], ['charts', '📊 Charts'],['trade', '📊 Trade'], ['markets', '🌍 Markets'], ['plans', '⭐ Plans']].map(([id, lbl]) => (
             <button key={id} onClick={() => setTab(id as any)}
               className={clsx('flex-1 py-2 rounded-lg text-xs font-semibold transition-all', tab === id ? 'bg-green text-black' : 'text-muted hover:text-white')}>
               {lbl}
@@ -781,6 +781,19 @@ export default function InvestPage() {
           </div>
         </div>
         )}
+
+        {tab === 'trade' && (
+          <div className="space-y-4">
+            <div className="flex gap-2 flex-wrap">
+              {(['all', 'FOREX', 'CRYPTO', 'COMMODITY'] as const).map(f => (
+                <button key={f} onClick={() => setFilter(f)}
+                  className={clsx('px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all', filter === f ? 'bg-green/10 border-green/40 text-green' : 'border-border text-muted hover:border-border2')}>
+                  {f === 'all' ? '🌐 All' : f === 'FOREX' ? '💱 Forex' : f === 'CRYPTO' ? '₿ Crypto' : '🥇 Commodity'}
+                </button>
+              ))}
+            </div>
+            </div>
+        )}  
 
         {/* MARKETS TAB — now opens chart modal on click */}
         {tab === 'markets' && (
